@@ -1,22 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
 *, *::before, *::after { box-sizing: border-box; }
-html, body { height:100%; overflow:hidden; }
-body { font-family:'Inter',system-ui,sans-serif; background:#030712; color:#e5e7eb; display:flex; flex-direction:column; }
-#main-content { flex:1; overflow:hidden; min-height:0; position:relative; }
-::-webkit-scrollbar { width:5px; height:5px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:#374151; border-radius:3px; }
-::-webkit-scrollbar-thumb:hover { background:#4b5563; }
-.mono { font-family:'JetBrains Mono',monospace; }
+html, body, #root { height: 100%; overflow: hidden; }
+body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: #030712; color: #e5e7eb; display: flex; flex-direction: column; }
+#root { display: flex; flex-direction: column; }
+.main-content { flex: 1; overflow: hidden; min-height: 0; position: relative; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+.mono { font-family: 'JetBrains Mono', monospace; }
 
 /* ── Cards ── */
-.card { background:#111827; border:1px solid #1f2937; border-radius:.75rem; }
-.card-blue   { border-color:rgba(96,165,250,.2); }
-.card-green  { border-color:rgba(52,211,153,.2); }
-.card-yellow { border-color:rgba(251,191,36,.2); }
-.card-red    { border-color:rgba(248,113,113,.2); }
-.card-violet { border-color:rgba(167,139,250,.2); }
-.card-orange { border-color:rgba(251,146,60,.2); }
+.card { background: #111827; border: 1px solid #1f2937; border-radius: .75rem; }
+.card-blue   { border-color: rgba(96,165,250,.2); }
+.card-green  { border-color: rgba(52,211,153,.2); }
+.card-yellow { border-color: rgba(251,191,36,.2); }
+.card-red    { border-color: rgba(248,113,113,.2); }
+.card-violet { border-color: rgba(167,139,250,.2); }
+.card-orange { border-color: rgba(251,146,60,.2); }
 
 /* ── Buttons ── */
 .btn { display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:.8rem;font-weight:600;border:1px solid;transition:all .18s;cursor:pointer; }
@@ -73,7 +76,7 @@ body { font-family:'Inter',system-ui,sans-serif; background:#030712; color:#e5e7
 .sl { font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#6b7280;margin-top:.375rem; }
 
 /* ── Nav tabs ── */
-.nav-tab { padding:12px 2px;font-size:.9rem;font-weight:500;color:#6b7280;border-bottom:2px solid transparent;transition:all .18s;cursor:pointer;white-space:nowrap; }
+.nav-tab { padding:12px 2px;font-size:.9rem;font-weight:500;color:#6b7280;border-bottom:2px solid transparent;transition:all .18s;cursor:pointer;white-space:nowrap; background: none; border-left: none; border-right: none; border-top: none; }
 .nav-tab.active { color:#60a5fa;border-bottom-color:#60a5fa; }
 .nav-tab:hover:not(.active) { color:#9ca3af; }
 
@@ -84,36 +87,36 @@ tr:hover td  { background:rgba(255,255,255,.018);transition:background .1s; }
 /* ── Config detail ── */
 .cfg-row { cursor:pointer; }
 .cfg-row:hover td { background:rgba(59,130,246,.05)!important; }
-.cfg-detail { display:none; }
-.cfg-detail.open { display:table-row; }
 
 /* ── Result task cards ── */
 .task-card { border:1px solid #1f2937;border-radius:.5rem;padding:.625rem .875rem;cursor:pointer;transition:all .18s; }
 .task-card:hover  { border-color:#374151;background:rgba(255,255,255,.025); }
 .task-card.sel    { border-color:#3b82f6;background:rgba(59,130,246,.07); }
 
-/* ── Panes — cada um ocupa exatamente o espaço disponível em #main-content ── */
-[id^="pane-"] { height:100%; }
-#pane-workflow { overflow:hidden; }
-#pane-queue { overflow:hidden; display:flex; flex-direction:column; }
-#pane-queue .queue-table-wrap { flex:1; min-height:0; display:flex; flex-direction:column; padding-bottom:24px; }
-#pane-queue .queue-table-wrap > .card { flex:1; min-height:0; display:flex; flex-direction:column; }
-#pane-queue .queue-table-wrap > .card > .tbl-scroll-inner { flex:1; min-height:0; overflow-y:auto; margin-right:4px; }
-#pane-configs { overflow:hidden; display:flex; flex-direction:column; }
-#pane-configs .configs-list-wrap { flex:1; min-height:0; display:flex; flex-direction:column; padding-bottom:24px; }
-#pane-configs .configs-list-wrap > .card { flex:1; min-height:0; display:flex; flex-direction:column; }
-#pane-configs .configs-list-wrap > .card > .tbl-scroll-inner { flex:1; min-height:0; overflow-y:auto; margin-right:4px; }
-#pane-results { overflow-y:auto; }
-#pane-hardware { overflow-y:auto; display:flex; flex-direction:column; justify-content:center; }
-#pane-terminal { overflow:hidden; display:flex; flex-direction:column; }
-/* Seletores ID têm especificidade maior que .hidden (classe) no Tailwind,
-   então display:flex sobrepõe display:none — precisa de override explícito */
-#pane-queue.hidden, #pane-terminal.hidden, #pane-configs.hidden, #pane-hardware.hidden { display:none; }
+/* ── Panes — cada um ocupa exatamente o espaco disponivel na area principal.
+   Todas as abas ficam sempre montadas (nunca renderizacao condicional) —
+   só a visibilidade alterna via classe, pra nao derrubar as conexoes SSE
+   nem recriar os graficos de hardware ao trocar de aba. ── */
+.pane { height: 100%; }
+.pane.hidden { display: none; }
+.pane-workflow { overflow: hidden; }
+.pane-queue { overflow: hidden; display: flex; flex-direction: column; }
+.pane-queue .queue-table-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-bottom: 24px; }
+.pane-queue .queue-table-wrap > .card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.pane-queue .queue-table-wrap > .card > .tbl-scroll-inner { flex: 1; min-height: 0; overflow-y: auto; margin-right: 4px; }
+.pane-configs { overflow: hidden; display: flex; flex-direction: column; }
+.pane-configs .configs-list-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-bottom: 24px; }
+.pane-configs .configs-list-wrap > .card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.pane-configs .configs-list-wrap > .card > .tbl-scroll-inner { flex: 1; min-height: 0; overflow-y: auto; margin-right: 4px; }
+.pane-results { overflow-y: auto; }
+.pane-hardware { overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
+.pane-terminal { overflow: hidden; display: flex; flex-direction: column; }
 
 /* ── Terminal pane ── */
-.tsub { padding:10px 2px;font-size:.8rem;font-weight:500;border-bottom:2px solid transparent;transition:all .18s;color:#6b7280;cursor:pointer;white-space:nowrap; }
+.tsub { padding:10px 2px;font-size:.8rem;font-weight:500;border-bottom:2px solid transparent;transition:all .18s;color:#6b7280;cursor:pointer;white-space:nowrap; background: none; border-left: none; border-right: none; border-top: none; }
 .tsub.active { border-color:#60a5fa;color:#60a5fa; }
 .tsub:hover:not(.active) { color:#9ca3af; }
-#term-card { flex:1;min-height:0;display:flex;flex-direction:column; }
-.term-wrap { overflow:hidden; }
+.term-card { flex:1;min-height:0;display:flex;flex-direction:column; }
+.term-wrap { overflow:hidden; height: 100%; }
+.term-wrap.hidden { display: none; }
 .term-wrap .xterm { height:100%; }
