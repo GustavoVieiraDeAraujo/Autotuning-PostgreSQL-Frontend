@@ -1,0 +1,12 @@
+{
+  "name": "autotuning-postgresql-frontend",
+  "version": "1.0.0",
+  "description": "Static browser dashboard for the PostgreSQL autotuning pipeline",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
