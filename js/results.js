@@ -20,9 +20,9 @@ async function renderResultTaskList() {
     return;
   }
   list.innerHTML = vis.map(f => {
-    const id  = parseInt(f.name.replace('task_', '').replace('.json', ''));
+    const id  = f.task_id;
     const t   = taskMap[id] || {}, res = t.result || {};
-    const path = `${f.tier}/${f.combo}/${f.name}`;
+    const path = `${f.tier}/${f.combo}/${f.task_id}`;
     const sel  = _selectedPath === path;
     const tpchOk  = res.tpc_h_n_success  != null ? `${res.tpc_h_n_success}/20`  : '–';
     const tpcdsOk = res.tpc_ds_n_success != null ? `${res.tpc_ds_n_success}/98` : '–';
