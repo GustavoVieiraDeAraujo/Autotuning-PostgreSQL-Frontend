@@ -1,32 +1,59 @@
-# React + TypeScript + Vite
+# Autotuning PostgreSQL — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> **Status: TCC concluído, projeto arquivado.** Ver
+> [`Autotuning-PostgreSQL-Pipeline`](../Autotuning-PostgreSQL-Pipeline) para
+> o objetivo completo do projeto e os resultados finais do meta-modelo. O
+> autor está migrando para um novo tema de TCC; este repositório fica
+> mantido como referência funcional (builda limpo, verificado em
+> 2026-08-09).
 
-Currently, two official plugins are available:
+## Papel deste repositório
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Interface web (React + TypeScript) pra acompanhar e controlar a coleta de
+benchmark do projeto de autotuning PostgreSQL, consumindo a API do
+repositório irmão [`Autotuning-PostgreSQL-Backend`](../Autotuning-PostgreSQL-Backend)
+(Java + Spring Boot), que por sua vez orquestra o
+[`Autotuning-PostgreSQL-Pipeline`](../Autotuning-PostgreSQL-Pipeline)
+(Python).
 
-## React Compiler
+6 abas, sempre montadas simultaneamente (visibilidade alternada só por
+classe CSS, nunca desmontagem condicional) — pra não derrubar as 3 conexões
+SSE de terminal nem recriar os gráficos de hardware ao trocar de aba:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Início** — máquina de estados do fluxo de trabalho (gerar → preparar
+  imagens Docker → rodar fila de benchmarks → ver resultados), com
+  transição automática entre etapas.
+- **Fila** — tarefas de benchmark pendentes/rodando/concluídas, com
+  filtro por tier e status.
+- **Configurações** — todas as combinações de parâmetros PostgreSQL geradas
+  por Latin Hypercube Sampling, com expansão de detalhe por linha.
+- **Hardware** — métricas em tempo real (CPU%, temperatura por sensor,
+  disco, rede) via polling de 1s, com gráficos de linha (janela de 30
+  amostras) e grid de sensores usando IDs estáveis expostos pelo backend.
+- **Terminal** — 3 streams de log em tempo real (gerador, preparo de
+  imagens, runner), via Server-Sent Events + xterm.js.
+- **Resultados** — lista de tarefas concluídas com detalhe (gráfico de
+  barras das métricas TPC-H/TPC-DS, configuração usada, resumo de
+  hardware).
 
-## Expanding the Oxlint configuration
+## Stack
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Vite + React 18 + TypeScript, Tailwind CSS v4, `@tanstack/react-query` para
+polling (fila/status @3s, métricas de hardware @1s), `useReducer` para a
+máquina de estados do fluxo de trabalho, `@xterm/xterm` para os terminais,
+`react-chartjs-2` para os gráficos. Reescrita completa (2026-08) de uma
+versão anterior em JavaScript puro — decisão de stack do autor, não
+motivada por limitação técnica da versão anterior.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Rodando localmente
+
+Pré-requisitos: Node 22+, e o backend
+([`Autotuning-PostgreSQL-Backend`](../Autotuning-PostgreSQL-Backend))
+rodando em `http://localhost:8000` (configurável via `.env.development`,
+variável `VITE_API_BASE`).
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # build de produção em dist/
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
