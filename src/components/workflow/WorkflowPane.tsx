@@ -173,7 +173,7 @@ export function WorkflowPane({ mode, tasks, status, onGoToTerminal, onGoToResult
             </div>
             <hr className="border-gray-800 my-4" />
             <div className="text-left max-w-xs mx-auto">
-              <label className="text-xs text-gray-500 block mb-1">Nova rodada — seed (opcional)</label>
+              <label className="text-xs text-gray-500 block mb-1">Nova rodada: seed (opcional)</label>
               <div className="flex gap-2">
                 <input
                   type="text"

@@ -74,7 +74,7 @@ export function HardwarePane({ hw, serverInfo }: Props) {
 
       <div className="grid grid-cols-2 gap-4 mb-5">
         <div className="card p-4">
-          <div className="sl mb-2">CPU % — Último Minuto</div>
+          <div className="sl mb-2">CPU %: Último Minuto</div>
           <Line
             data={{
               labels,
@@ -88,7 +88,7 @@ export function HardwarePane({ hw, serverInfo }: Props) {
           />
         </div>
         <div className="card p-4">
-          <div className="sl mb-2">Temperatura CPU — Último Minuto</div>
+          <div className="sl mb-2">Temperatura CPU: Último Minuto</div>
           <Line
             data={{
               labels,

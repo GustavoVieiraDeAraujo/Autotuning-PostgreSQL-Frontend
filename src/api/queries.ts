@@ -10,7 +10,7 @@ import type {
   HwSnapshot,
 } from './types';
 
-// ── Fila — poll a cada 3s, independente da aba ativa ──────────────────────
+// ── Fila: poll a cada 3s, independente da aba ativa ──────────────────────
 export function useQueueQuery() {
   return useQuery({
     queryKey: ['queue'],
@@ -19,7 +19,7 @@ export function useQueueQuery() {
   });
 }
 
-// ── Status combinado dos 3 processos + imagens — poll a cada 3s ──────────
+// ── Status combinado dos 3 processos + imagens: poll a cada 3s ──────────
 export interface CombinedStatus {
   generator: ProcessStatus;
   prepare: ProcessStatus;
@@ -43,7 +43,7 @@ export function useProcessStatusQuery() {
   });
 }
 
-// ── Metricas de hardware — poll a cada 1s, sempre ativo (nao so na aba Hardware) ──
+// ── Metricas de hardware: poll a cada 1s, sempre ativo (nao so na aba Hardware) ──
 export function useHwMetricsQuery() {
   return useQuery({
     queryKey: ['hw-metrics'],
@@ -52,7 +52,7 @@ export function useHwMetricsQuery() {
   });
 }
 
-// ── Info estatica do servidor — busca uma vez so ──────────────────────────
+// ── Info estatica do servidor: busca uma vez so ──────────────────────────
 export function useServerInfoQuery() {
   return useQuery({
     queryKey: ['server-info'],

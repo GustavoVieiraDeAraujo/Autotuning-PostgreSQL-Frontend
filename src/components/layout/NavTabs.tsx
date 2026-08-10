@@ -16,7 +16,7 @@ const TAB_LABELS: Record<TabName, string> = {
   terminal: 'Terminal',
 };
 
-// Ordem de exibicao — "Fila" e "Configuracoes" vem primeiro no app original
+// Ordem de exibicao: "Fila" e "Configuracoes" vem primeiro no app original
 const ORDER: TabName[] = ['queue', 'workflow', 'configs', 'hardware', 'terminal', 'results'];
 
 export function NavTabs({ active, onChange, showQueueConfigs, showResults }: Props) {

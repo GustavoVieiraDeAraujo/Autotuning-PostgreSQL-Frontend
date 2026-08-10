@@ -16,7 +16,7 @@ function App() {
   const [activeTerminalSub, setActiveTerminalSub] = useState<TerminalKey>('generate');
 
   // As 3 queries de polling ficam aqui (nao dentro de cada painel) porque
-  // devem continuar rodando independente da aba ativa — mesmo
+  // devem continuar rodando independente da aba ativa, mesmo
   // comportamento do app original (setInterval nunca gated pela aba visivel).
   const queueQuery = useQueueQuery();
   const statusQuery = useProcessStatusQuery();
@@ -42,7 +42,7 @@ function App() {
         showQueueConfigs={showQueueConfigs}
         showResults={showResults}
       />
-      {/* Todas as abas ficam sempre montadas — so a visibilidade alterna via
+      {/* Todas as abas ficam sempre montadas: so a visibilidade alterna via
           classe CSS. Renderizacao condicional desmontaria as 3 conexoes SSE
           do terminal e os graficos de hardware a cada troca de aba. */}
       <main className="main-content">

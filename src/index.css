@@ -93,8 +93,8 @@ tr:hover td  { background:rgba(255,255,255,.018);transition:background .1s; }
 .task-card:hover  { border-color:#374151;background:rgba(255,255,255,.025); }
 .task-card.sel    { border-color:#3b82f6;background:rgba(59,130,246,.07); }
 
-/* ── Panes — cada um ocupa exatamente o espaco disponivel na area principal.
-   Todas as abas ficam sempre montadas (nunca renderizacao condicional) —
+/* ── Panes: cada um ocupa exatamente o espaco disponivel na area principal.
+   Todas as abas ficam sempre montadas (nunca renderizacao condicional):
    só a visibilidade alterna via classe, pra nao derrubar as conexoes SSE
    nem recriar os graficos de hardware ao trocar de aba. ── */
 .pane { height: 100%; }

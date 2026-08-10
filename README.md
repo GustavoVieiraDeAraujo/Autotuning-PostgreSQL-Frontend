@@ -1,11 +1,13 @@
 # Autotuning PostgreSQL: Frontend
 
-> **Status: TCC concluído, projeto arquivado.** Ver
+> **Status: projeto interrompido, arquivado.** Foi pensado para ser o tema
+> do TCC do autor, mas não chegou a ser usado como tal: faltou concluir a
+> etapa de validação em instâncias de nuvem real, inviabilizada por uma
+> barreira financeira de custo de infraestrutura. Ver
 > [`Autotuning-PostgreSQL-Pipeline`](../Autotuning-PostgreSQL-Pipeline) para
-> o objetivo completo do projeto e os resultados finais do meta-modelo. O
-> autor está migrando para um novo tema de TCC; este repositório fica
-> mantido como referência funcional (builda limpo, verificado em
-> 2026-08-09).
+> o objetivo completo do projeto, os resultados obtidos e o motivo da
+> interrupção. Este repositório fica mantido como referência funcional
+> (builda limpo, verificado em 2026-08-09).
 
 ## Sumário
 
@@ -92,52 +94,7 @@ navegação.
 
 ## Arquitetura: visão geral
 
-```mermaid
-flowchart TB
-    subgraph Backend["Backend (Java + Spring Boot), porta 8000"]
-        REST["REST API\n/api/queue, /api/*/status,\n/api/metrics, /api/server-info,\n/api/results/*"]
-        SSE["SSE\n/stream/generate\n/stream/prepare\n/stream/runner"]
-    end
-
-    subgraph FE["Frontend (este repositório)"]
-        App["App.tsx\n(estado raiz: activeTab,\nactiveTerminalSub)"]
-        Header["Header"]
-        NavTabs["NavTabs"]
-
-        subgraph Panes["6 <div class='pane'> sempre montadas"]
-            WorkflowPane
-            QueuePane
-            ConfigsPane
-            HardwarePane
-            TerminalPane
-            ResultsPane
-        end
-
-        WF["useWorkflowState\n(useReducer + localStorage)"]
-        TS1["useTerminalStream('generate')"]
-        TS2["useTerminalStream('prepare')"]
-        TS3["useTerminalStream('runner')"]
-
-        App --> Header
-        App --> NavTabs
-        App --> Panes
-        App --> WF
-        TerminalPane --> TS1 & TS2 & TS3
-    end
-
-    REST -- "useQueueQuery @3s" --> App
-    REST -- "useProcessStatusQuery @3s" --> App
-    REST -- "useHwMetricsQuery @1s" --> App
-    REST -- "useServerInfoQuery (1x)" --> App
-    REST -- "useResultsListQuery / useResultDetailQuery" --> ResultsPane
-    SSE -- "EventSource" --> TS1 & TS2 & TS3
-
-    App -. "tasks, status, hw" .-> WorkflowPane
-    App -. "tasks" .-> QueuePane
-    App -. "tasks" .-> ConfigsPane
-    App -. "hw, serverInfo" .-> HardwarePane
-    App -. "tasks" .-> ResultsPane
-```
+![Arquitetura do Frontend: as 6 abas sempre montadas consumindo REST e SSE do Backend](docs/architecture.svg)
 
 As 3 queries de polling (fila, status combinado, métricas de hardware)
 vivem no componente raiz `App.tsx`, não dentro de cada painel. Assim elas
@@ -254,22 +211,7 @@ do reducer e, em paralelo, navegação automática pro sub-terminal certo
 (`onAutoNavigate`) sempre que um processo começa ou termina, inclusive
 disparando `usePrepareStart` automaticamente quando o gerador termina.
 
-```mermaid
-stateDiagram-v2
-    [*] --> idle
-    idle --> generated: TASKS_UPDATED (hasTasks)
-    generated --> prepared: PREPARE_FINISHED
-    generated --> prepared: PROMOTE_TO_PREPARED_IF_READY\n(reload após prepare já ter terminado)
-    idle --> generated: GENERATOR_FINISHED
-    generated --> ran: TASKS_UPDATED (hasDone)
-    prepared --> ran: TASKS_UPDATED (hasDone)
-    ran --> idle: TASKS_UPDATED (!hasTasks, ex. reset)
-
-    note right of generated
-      DisplayMode sobrepõe, em runtime:
-      running > generating > preparing > step persistido
-    end note
-```
+![Maquina de estados do fluxo de trabalho (WorkflowStep)](docs/workflow_state_diagram.svg)
 
 ## Como o terminal em tempo real funciona
 

@@ -16,7 +16,7 @@ export type ConnectionState = 'connecting' | 'connected' | 'disconnected';
 /**
  * Abre uma conexao SSE persistente pra um dos 3 logs (generate/prepare/runner)
  * e escreve o conteudo direto num terminal xterm.js. Porta de terminal.js do
- * app vanilla original — mesmo decode base64->bytes, mesmo backoff linear de
+ * app vanilla original: mesmo decode base64->bytes, mesmo backoff linear de
  * reconexao, mesmo evento customizado "reset" (log truncado por nova execucao).
  */
 export function useTerminalStream(key: TerminalKey, containerRef: RefObject<HTMLDivElement | null>) {

@@ -10,7 +10,7 @@ export interface LiveProcessFlags {
 
 /**
  * Deriva o modo de exibicao do hero card (workflow) sobrepondo os booleanos
- * ao vivo de processo sobre o passo persistido — pura, sem estado proprio.
+ * ao vivo de processo sobre o passo persistido, pura, sem estado proprio.
  * Prioridade: running > generating > preparing > (passo persistido).
  */
 export function deriveDisplayMode(step: WorkflowStep, live: LiveProcessFlags): DisplayMode {

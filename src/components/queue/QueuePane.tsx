@@ -94,7 +94,7 @@ export function QueuePane({ tasks }: Props) {
                       <span className={`badge badge-${t.status}`}>
                         {t.status}
                         {t.status === 'abandoned' && t.abandoned_reason && (
-                          <span> — {ABANDONED_LABELS[t.abandoned_reason] ?? t.abandoned_reason}</span>
+                          <span>: {ABANDONED_LABELS[t.abandoned_reason] ?? t.abandoned_reason}</span>
                         )}
                       </span>
                       {t.retry_count > 0 && (

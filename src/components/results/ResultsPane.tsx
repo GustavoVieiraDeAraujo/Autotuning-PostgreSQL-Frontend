@@ -12,10 +12,10 @@ interface Props {
 
 const ABANDONED_MESSAGES: Record<string, string> = {
   timeout:
-    'Limite de tempo excedido — a configuração demorou mais do que o permitido para o tier.',
+    'Limite de tempo excedido: a configuração demorou mais do que o permitido para o tier.',
   invalid_config:
-    'Configuração inválida — o PostgreSQL rejeitou um ou mais parâmetros da configuração gerada.',
-  max_retries: 'Falha de infraestrutura — a tarefa falhou 3 vezes consecutivas (Docker, disco ou rede).',
+    'Configuração inválida: o PostgreSQL rejeitou um ou mais parâmetros da configuração gerada.',
+  max_retries: 'Falha de infraestrutura: a tarefa falhou 3 vezes consecutivas (Docker, disco ou rede).',
 };
 
 export function ResultsPane({ tasks, active }: Props) {
@@ -99,7 +99,7 @@ export function ResultsPane({ tasks, active }: Props) {
             <div className="flex items-center justify-between">
               <div>
                 <div className="font-semibold text-lg">
-                  Tarefa #{detail.task_id} — {detail.tier} / {detail.combination}
+                  Tarefa #{detail.task_id}: {detail.tier} / {detail.combination}
                 </div>
                 {detail.started_at && (
                   <div className="text-xs text-gray-500">

@@ -11,7 +11,7 @@ export interface TerminalNavTarget {
 }
 
 /**
- * Fica no nivel de App (nao dentro de cada painel) — o workflow precisa
+ * Fica no nivel de App (nao dentro de cada painel): o workflow precisa
  * reagir a fila/status independente da aba ativa no momento, igual ao
  * comportamento do app original (polling nunca gated pela aba visivel).
  */
@@ -28,7 +28,7 @@ export function useWorkflowState(
     persistStep(state.step);
   }, [state.step]);
 
-  // Reage ao conteudo da fila — equivalente a inferStepFromTasks().
+  // Reage ao conteudo da fila: equivalente a inferStepFromTasks().
   useEffect(() => {
     if (!tasks) return;
     dispatch({
@@ -38,7 +38,7 @@ export function useWorkflowState(
     });
   }, [tasks]);
 
-  // Reage as transicoes dos 3 processos — equivalente ao bloco de comparacao
+  // Reage as transicoes dos 3 processos: equivalente ao bloco de comparacao
   // prev/new que existia dentro de fetchStatus() no app original.
   useEffect(() => {
     if (!status) return;
@@ -78,7 +78,7 @@ export function useWorkflowState(
 
     prevFlags.current = { gen, prep, run };
     // prepareStart e onAutoNavigate sao estaveis o suficiente pra esse
-    // efeito de transicao — so nos importam os valores de status/tasks.
+    // efeito de transicao: so nos importam os valores de status/tasks.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 

@@ -17,7 +17,7 @@ export type WorkflowAction =
  * Consolida as duas heuristicas ad-hoc do app vanilla original
  * (`inferStepFromTasks`, que so olhava o conteudo da fila, e a comparacao
  * prev/new dos booleanos de processo dentro de `fetchStatus`) num unico
- * reducer explicito — mais facil de raciocinar e testar isoladamente.
+ * reducer explicito: mais facil de raciocinar e testar isoladamente.
  */
 export function workflowReducer(state: WorkflowState, action: WorkflowAction): WorkflowState {
   switch (action.type) {

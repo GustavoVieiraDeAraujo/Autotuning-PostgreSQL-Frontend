@@ -1,5 +1,5 @@
 // Base URL do backend. Configuravel via VITE_API_BASE (.env.development /
-// .env.production) — default local aponta pro backend Java rodando na 8000.
+// .env.production): default local aponta pro backend Java rodando na 8000.
 export const API_BASE: string = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000';
 
 export class ApiError extends Error {

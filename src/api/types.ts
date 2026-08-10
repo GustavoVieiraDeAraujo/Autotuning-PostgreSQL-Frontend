@@ -1,5 +1,5 @@
 // Tipos escritos a mao, batendo com o JSON real produzido pelo backend
-// (verificado endpoint por endpoint durante a reescrita em Java/Spring) —
+// (verificado endpoint por endpoint durante a reescrita em Java/Spring):
 // a superficie e pequena o suficiente pra nao justificar geracao via OpenAPI.
 
 export type TaskStatus = 'pending' | 'running' | 'done' | 'failed' | 'abandoned';

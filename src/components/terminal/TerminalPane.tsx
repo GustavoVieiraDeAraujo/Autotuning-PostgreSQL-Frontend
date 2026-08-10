@@ -25,7 +25,7 @@ export function TerminalPane({ activeSub, onChangeSub }: Props) {
   const runnerRef = useRef<HTMLDivElement>(null);
 
   // As 3 conexoes SSE/instancias xterm sao criadas aqui e persistem
-  // enquanto TerminalPane estiver montado — como o painel inteiro nunca e
+  // enquanto TerminalPane estiver montado: como o painel inteiro nunca e
   // desmontado (so tem visibilidade alternada via CSS, ver App.tsx), elas
   // ficam vivas em background mesmo trocando de aba/sub-aba.
   const generate = useTerminalStream('generate', genRef);
