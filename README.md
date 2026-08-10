@@ -10,6 +10,8 @@
 ## Sumário
 
 - [Papel deste repositório](#papel-deste-repositório)
+- [Participantes](#participantes)
+- [Tecnologias](#tecnologias)
 - [Arquitetura: visão geral](#arquitetura-visão-geral)
 - [Por que as 6 abas ficam sempre montadas](#por-que-as-6-abas-ficam-sempre-montadas)
 - [A máquina de estados do fluxo de trabalho](#a-máquina-de-estados-do-fluxo-de-trabalho)
@@ -17,7 +19,9 @@
 - [Camada de dados](#camada-de-dados)
 - [Resultados e validação](#resultados-e-validação)
 - [Limitações](#limitações)
-- [Rodando localmente](#rodando-localmente)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Requisitos](#requisitos)
+- [Como Executar](#como-executar)
 
 ## Papel deste repositório
 
@@ -66,6 +70,25 @@ navegação quando há dado pra mostrar (`showQueueConfigs` = existe alguma
 tarefa na fila; `showResults` = existe alguma tarefa `done`, ver
 `NavTabs.tsx`), mas continuam montadas em `App.tsx` mesmo escondidas da
 navegação.
+
+## Participantes
+
+| Nome | Matricula |
+|---|---|
+| Gustavo Vieira de Araujo | 211068440 |
+
+## Tecnologias
+
+| Tecnologia | Uso |
+|---|---|
+| Vite | Build tool e dev server |
+| React 19 | Biblioteca de UI |
+| TypeScript | Tipagem estática |
+| Tailwind CSS v4 | Estilização |
+| `@tanstack/react-query` | Polling e cache das chamadas REST ao Backend |
+| `@xterm/xterm` + `@xterm/addon-fit` | Terminais em tempo real via SSE |
+| `chart.js` + `react-chartjs-2` | Gráficos de hardware e resultados |
+| oxlint | Linter |
 
 ## Arquitetura: visão geral
 
@@ -407,17 +430,30 @@ componentes renderizam isoladamente com props fixas.
   rede, o custo de um bundle maior não compensou a complexidade extra de
   segmentar o carregamento.
 
-## Stack
+## Estrutura do Projeto
 
-Vite + React 19 + TypeScript, Tailwind CSS v4, `@tanstack/react-query`
-para polling (fila/status @3s, métricas de hardware @1s), `useReducer`
-para a máquina de estados do fluxo de trabalho, `@xterm/xterm` +
-`@xterm/addon-fit` para os terminais, `chart.js` + `react-chartjs-2` para
-os gráficos. `oxlint` como linter. Reescrita completa (2026-08) de uma
-versão anterior em JavaScript puro, decisão de stack do autor, não
-motivada por limitação técnica da versão anterior.
+| Diretório / Arquivo | Descrição |
+|---|---|
+| `src/api/` | `client.ts` (fetch tipado) e `queries.ts` (hooks react-query) |
+| `src/components/workflow/` | Painel da aba Início, máquina de estados do fluxo |
+| `src/components/queue/` | Painel da aba Fila |
+| `src/components/configs/` | Painel da aba Configurações |
+| `src/components/hardware/` | Painel da aba Hardware, gráficos em tempo real |
+| `src/components/terminal/` | Painel da aba Terminal, 3 streams SSE |
+| `src/components/results/` | Painel da aba Resultados |
+| `src/components/layout/` | `Header` e `NavTabs` |
+| `src/hooks/` | `useTerminalStream` e outros hooks compartilhados |
+| `src/state/workflow/` | Reducer e derivação de estado da máquina de estados |
+| `src/lib/` | Utilitários compartilhados |
 
-## Rodando localmente
+## Requisitos
+
+| Dependência | Versão | Instalação |
+|---|---|---|
+| Node.js | 22+ | `npm install` |
+| Backend rodando | `http://localhost:8000` | Ver `Autotuning-PostgreSQL-Backend`, configurável via `VITE_API_BASE` |
+
+## Como Executar
 
 Pré-requisitos: Node 22+, e o backend
 ([`Autotuning-PostgreSQL-Backend`](../Autotuning-PostgreSQL-Backend))
@@ -429,3 +465,7 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # build de produção em dist/
 ```
+
+---
+
+> Documentacao gerada com auxilio de IA.
