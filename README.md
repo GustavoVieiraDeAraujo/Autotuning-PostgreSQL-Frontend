@@ -1,7 +1,7 @@
 # Autotuning PostgreSQL: Frontend
 
-> **Status: projeto interrompido, arquivado.** Foi pensado para ser o tema
-> do TCC do autor, mas não chegou a ser usado como tal: faltou concluir a
+> **Status: projeto interrompido, arquivado.** Pensei nele para ser o tema
+> do meu TCC, mas não cheguei a usá-lo como tal: faltou concluir a
 > etapa de validação em instâncias de nuvem real, inviabilizada por uma
 > barreira financeira de custo de infraestrutura. Ver
 > [`Autotuning-PostgreSQL-Pipeline`](../Autotuning-PostgreSQL-Pipeline) para
@@ -38,7 +38,7 @@ real dos benchmarks TPC-H/TPC-DS e treino do meta-modelo de ML).
 É a reescrita em React + TypeScript de um frontend original em JavaScript
 puro (ver `git log`: o commit `623ed9b` é a importação do frontend estático
 original, extraído de templates Jinja + arquivos estáticos servidos pelo
-backend Python). A reescrita foi decisão de stack do autor, não motivada
+backend Python). A reescrita foi decisão minha de stack, não motivada
 por limitação técnica da versão anterior, e reaproveita deliberadamente
 vários comportamentos exatos do app vanilla (polling nunca gated pela aba
 ativa, mesmo backoff de reconexão do terminal, mesmo evento `reset`), como
