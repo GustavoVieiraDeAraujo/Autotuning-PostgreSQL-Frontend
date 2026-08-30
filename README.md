@@ -1,14 +1,5 @@
 # Autotuning PostgreSQL: Frontend
 
-> **Status: projeto interrompido, arquivado.** Pensei nele para ser o tema
-> do meu TCC, mas não cheguei a usá-lo como tal: faltou concluir a
-> etapa de validação em instâncias de nuvem real, inviabilizada por uma
-> barreira financeira de custo de infraestrutura. Ver
-> [`Autotuning-PostgreSQL-Pipeline`](../Autotuning-PostgreSQL-Pipeline) para
-> o objetivo completo do projeto, os resultados obtidos e o motivo da
-> interrupção. Este repositório fica mantido como referência funcional
-> (builda limpo, verificado em 2026-08-09).
-
 ## Sumário
 
 - [Papel deste repositório](#papel-deste-repositório)
